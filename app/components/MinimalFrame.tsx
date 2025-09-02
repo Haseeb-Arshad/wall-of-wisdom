@@ -1,4 +1,5 @@
 import { IconEye, IconEyeOff, IconFile, IconGear, IconGraph, IconPlus, IconSpark } from "./Workspace";
+import { Link } from "react-router";
 import type { PropsWithChildren, ReactNode } from "react";
 
 type Props = PropsWithChildren<{
@@ -13,12 +14,12 @@ export default function MinimalFrame({ left, ctaHref, ctaLabel = "New", searchPl
     <div className="ws-wrap">
       <div className="ws-surface">
         <aside className="ws-rail">
-          <a className="rail-btn" href="/" title="Home"><IconFile /></a>
-          <a className="rail-btn" href="/wall" title="Wall"><IconGraph /></a>
-          <a className="rail-btn" href="/import" title="Import"><IconSpark /></a>
-          <a className="rail-btn" href="/decks" title="Decks"><IconFile /></a>
-          <a className="rail-btn" href="/study" title="Study"><IconEye /></a>
-          <a className="rail-btn" href="/progress" title="Progress"><IconEyeOff /></a>
+          <Link className="rail-btn" to="/" title="Home"><IconFile /></Link>
+          <Link className="rail-btn" to="/wall" title="Wall"><IconGraph /></Link>
+          <Link className="rail-btn" to="/import" title="Import"><IconSpark /></Link>
+          <Link className="rail-btn" to="/decks" title="Decks"><IconFile /></Link>
+          <Link className="rail-btn" to="/study" title="Study"><IconEye /></Link>
+          <Link className="rail-btn" to="/progress" title="Progress"><IconEyeOff /></Link>
           <div className="rail-spacer" />
           <div style={{ opacity: 0.5 }}>🐱</div>
         </aside>
@@ -37,7 +38,7 @@ export default function MinimalFrame({ left, ctaHref, ctaLabel = "New", searchPl
             </div>
             <div className="ws-right">
               {ctaHref && (
-                <a className="pill pill-dark" href={ctaHref}><IconPlus /> {ctaLabel}</a>
+                <Link className="pill pill-accent" to={ctaHref}><IconPlus /> {ctaLabel}</Link>
               )}
             </div>
           </div>
@@ -59,4 +60,3 @@ export default function MinimalFrame({ left, ctaHref, ctaLabel = "New", searchPl
     </div>
   );
 }
-

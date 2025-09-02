@@ -1,5 +1,6 @@
 import type { Route } from "./+types/home";
 import MinimalFrame from "../components/MinimalFrame";
+import { Link } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -15,8 +16,8 @@ export default function Home() {
         <h2>Welcome</h2>
         <p className="muted">Start by importing a document or open the wall.</p>
         <div className="row">
-          <a className="btn primary" href="/import">Import</a>
-          <a className="btn" href="/wall">Open Wall</a>
+          <Link className="btn primary" to="/import">Import</Link>
+          <Link className="btn" to="/wall">Open Wall</Link>
         </div>
       </section>
     </MinimalFrame>

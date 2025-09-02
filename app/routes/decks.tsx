@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { createDeck, listDecks } from "../lib/db";
 import type { Deck } from "../types";
 import MinimalFrame from "../components/MinimalFrame";
+import { Link } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -57,10 +58,10 @@ export default function DecksRoute() {
               </div>
             )}
             {decks.map((d) => (
-              <a key={d.id} className="card" style={{ padding: 16, textDecoration: "none" }} href={`/study?deck=${d.id}`}>
+              <Link key={d.id} className="card" style={{ padding: 16, textDecoration: "none" }} to={`/study?deck=${d.id}`}>
                 <strong style={{ display: "block", marginBottom: 6 }}>{d.title}</strong>
                 <p className="muted">Updated {new Date(d.updatedAt).toLocaleString()}</p>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

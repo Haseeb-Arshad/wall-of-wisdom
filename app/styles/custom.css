@@ -240,6 +240,7 @@ h3 { font-size: 18px; }
 .ws-right { display: flex; gap: 8px; align-items: center; justify-content: flex-end; }
 .pill { height: 38px; padding: 0 14px; display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; border: 1px solid #ececec; background: #fff; color: #555; }
 .pill-dark { background: #222; color: #fff; border-color: #222; }
+.pill-accent { background: var(--ww-accent); color: #fff; border-color: var(--ww-accent); }
 .pill-input { width: min(720px, 66vw); height: 44px; border-radius: 999px; border: 1px solid #ededed; background: #fff; padding: 0 16px; display: flex; align-items: center; gap: 10px; color: #777; }
 .pill-input input { border: none; outline: none; flex: 1; font-size: 14px; color: #333; background: transparent; }
 .pill-input .hint { color: #bbb; font-size: 12px; }
