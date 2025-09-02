@@ -73,8 +73,23 @@ export function StickyWall({ width = "100%", height = "70vh" }: { width?: string
     setNotes((prev) => prev.map((n) => (n.id === id ? { ...n, x: nx, y: ny } : n)));
   }
 
+  function resetLayout() {
+    const el = containerRef.current;
+    const w = el ? el.clientWidth : 1000;
+    const cols = Math.max(1, Math.floor((w - 40) / 260));
+    setNotes((prev) => prev.map((n, i) => ({
+      ...n,
+      x: 20 + (i % cols) * 260,
+      y: 20 + Math.floor(i / cols) * 190,
+      rotate: 0,
+    })));
+  }
+
   return (
-    <div ref={containerRef} style={{ position: "relative", width, height, borderRadius: 12, background: "#f6f2ea", overflow: "hidden" }}>
+    <div ref={containerRef} style={{ position: "relative", width, height, borderRadius: 12, background: "#fff", overflow: "hidden", border: "1px solid #eee" }}>
+      <div style={{ position: "absolute", right: 10, top: 10, zIndex: 100 }}>
+        <button className="pill" onClick={resetLayout}><span style={{ fontSize: 12 }}>Reset layout</span></button>
+      </div>
       {notes.map((n, i) => (
         <StickyNote
           key={n.id}

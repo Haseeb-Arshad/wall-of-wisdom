@@ -4,6 +4,7 @@ import { getCardsByDeck, getDueCards, startSession, finishSession, updateCard, l
 import { review } from "../lib/srs";
 import type { Card, Deck, Difficulty } from "../types";
 import MinimalFrame from "../components/MinimalFrame";
+import { motion } from "framer-motion";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -121,15 +122,28 @@ export default function StudyRoute() {
           </div>
         </div>
         <div className="row" style={{ gap: 16 }}>
-          <div className="card" style={{ padding: 16, flex: 1 }}>
-            <h3>Front</h3>
-            <p>{current ? current.front : "No card"}</p>
+          <div className="card" style={{ padding: 16, flex: 1, perspective: 1000 }}>
+            <h3>Card</h3>
+            <div style={{ position: "relative", height: 160 }}>
+              <motion.div
+                style={{ position: "absolute", inset: 0, transformStyle: "preserve-3d" }}
+                animate={{ rotateY: revealed ? 180 : 0 }}
+                transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+              >
+                <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", display: "flex", alignItems: "center" }}>
+                  <p>{current ? current.front : "No card"}</p>
+                </div>
+                <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", transform: "rotateY(180deg)", display: "flex", alignItems: "center" }}>
+                  <p className="muted">{current ? current.back : ""}</p>
+                </div>
+              </motion.div>
+            </div>
             <div className="spacer" />
             <button className="btn" onClick={() => setRevealed((v) => !v)} disabled={!current}>{revealed ? "Hide" : "Reveal"}</button>
           </div>
           <div className="card" style={{ padding: 16, flex: 1 }}>
-            <h3>Back</h3>
-            <p className="muted">{revealed && current ? current.back : "Answer is hidden until reveal."}</p>
+            <h3>Rate</h3>
+            <p className="muted">Choose difficulty to schedule next review.</p>
             <div className="row" style={{ justifyContent: "flex-end", gap: 8 }}>
               <button className="btn" onClick={() => rate("again")} disabled={!current}>Again</button>
               <button className="btn" onClick={() => rate("hard")} disabled={!current}>Hard</button>

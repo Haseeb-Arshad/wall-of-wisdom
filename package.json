@@ -15,6 +15,7 @@
     "@use-gesture/react": "^10.3.1",
     "dayjs": "^1.11.18",
     "framer-motion": "^12.23.12",
+    "fuse.js": "^7.1.0",
     "idb": "^8.0.3",
     "isbot": "^5.1.27",
     "openai": "^5.17.0",
