@@ -8,5 +8,6 @@ export default [
   route("/study", "routes/study.tsx"),
   route("/progress", "routes/progress.tsx"),
   route("/auth", "routes/auth.tsx"),
+  route("/privacy", "routes/privacy.tsx"),
   route("/api/generate", "routes/api.generate.tsx"),
 ] satisfies RouteConfig;
