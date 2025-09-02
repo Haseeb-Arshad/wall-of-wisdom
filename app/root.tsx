@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -25,6 +26,8 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const loc = useLocation();
+  const isAuth = loc?.pathname?.startsWith("/auth");
   return (
     <html lang="en">
       <head>
@@ -34,24 +37,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <header className="ww-header">
-          <nav className="ww-container ww-nav">
-            <div className="ww-brand">
-              <span>🧠</span>
-              <span>WisdomWall</span>
-            </div>
-            <div className="ww-nav-links">
-              <a className="ww-link" href="/">Home</a>
-              <a className="ww-link" href="/wall">Wall</a>
-              <a className="ww-link" href="/import">Import</a>
-              <a className="ww-link" href="/decks">Decks</a>
-              <a className="ww-link" href="/study">Study</a>
-              <a className="ww-link" href="/progress">Progress</a>
-              <a className="ww-link ww-cta" href="/auth">Sign In</a>
-            </div>
-          </nav>
-        </header>
-        <main className="ww-container" style={{ minHeight: "calc(100dvh - 64px)" }}>
+        {!isAuth && (
+          <header className="ww-header">
+            <nav className="ww-container ww-nav">
+              <div className="ww-brand">
+                <span>🧠</span>
+                <span>WisdomWall</span>
+              </div>
+              <div className="ww-nav-links">
+                <a className="ww-link" href="/">Home</a>
+                <a className="ww-link" href="/wall">Wall</a>
+                <a className="ww-link" href="/import">Import</a>
+                <a className="ww-link" href="/decks">Decks</a>
+                <a className="ww-link" href="/study">Study</a>
+                <a className="ww-link" href="/progress">Progress</a>
+                <a className="ww-link ww-cta" href="/auth">Sign In</a>
+              </div>
+            </nav>
+          </header>
+        )}
+        <main className={isAuth ? "" : "ww-container"} style={isAuth ? undefined : { minHeight: "calc(100dvh - 64px)" }}>
           {children}
         </main>
         <ScrollRestoration />
