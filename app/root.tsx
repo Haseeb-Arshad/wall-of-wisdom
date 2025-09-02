@@ -28,6 +28,7 @@ export const links: Route.LinksFunction = () => [
 export function Layout({ children }: { children: React.ReactNode }) {
   const loc = useLocation();
   const isAuth = loc?.pathname?.startsWith("/auth");
+  const isHome = loc?.pathname === "/";
   return (
     <html lang="en">
       <head>
@@ -37,7 +38,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {!isAuth && (
+        {!isAuth && !isHome && (
           <header className="ww-header">
             <nav className="ww-container ww-nav">
               <div className="ww-brand">
@@ -56,7 +57,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </nav>
           </header>
         )}
-        <main className={isAuth ? "" : "ww-container"} style={isAuth ? undefined : { minHeight: "calc(100dvh - 64px)" }}>
+        <main className={isAuth || isHome ? "" : "ww-container"} style={isAuth || isHome ? undefined : { minHeight: "calc(100dvh - 64px)" }}>
           {children}
         </main>
         <ScrollRestoration />
