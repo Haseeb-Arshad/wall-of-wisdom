@@ -11,5 +11,6 @@ export default [
   route("/privacy", "routes/privacy.tsx"),
   // Dev fallback for PWA icon requests
   route("/icons/:file", "routes/icons.tsx"),
+  route("/manifest.webmanifest", "routes/manifest.tsx"),
   route("/api/generate", "routes/api.generate.tsx"),
 ] satisfies RouteConfig;
