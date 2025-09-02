@@ -9,5 +9,7 @@ export default [
   route("/progress", "routes/progress.tsx"),
   route("/auth", "routes/auth.tsx"),
   route("/privacy", "routes/privacy.tsx"),
+  // Dev fallback for PWA icon requests
+  route("/icons/:file", "routes/icons.tsx"),
   route("/api/generate", "routes/api.generate.tsx"),
 ] satisfies RouteConfig;
