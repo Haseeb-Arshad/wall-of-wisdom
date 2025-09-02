@@ -1,6 +1,6 @@
 import type { Route } from "./+types/study";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { getCardsByDeck, getDueCards, startSession, finishSession, updateCard, listDecks } from "../lib/db";
+import { getCardsByDeck, getDueCards, startSession, finishSession, updateCard, listDecks, putEvent } from "../lib/db";
 import { review } from "../lib/srs";
 import type { Card, Deck, Difficulty } from "../types";
 
@@ -76,6 +76,7 @@ export default function StudyRoute() {
     if (!current) return;
     const updated = review(current, r);
     await updateCard(updated);
+    await putEvent({ type: "rating", data: { rating: r, cardId: current.id } });
     // Move to end if still due soon; otherwise remove from queue
     setQueue((prev) => prev.filter((c) => c.id !== current.id));
     setCurrent((prev) => {
