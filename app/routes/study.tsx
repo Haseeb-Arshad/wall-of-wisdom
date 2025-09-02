@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { getCardsByDeck, getDueCards, startSession, finishSession, updateCard, listDecks, putEvent } from "../lib/db";
 import { review } from "../lib/srs";
 import type { Card, Deck, Difficulty } from "../types";
+import MinimalFrame from "../components/MinimalFrame";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -94,48 +95,50 @@ export default function StudyRoute() {
   }, [timer]);
 
   return (
-    <section className="stack">
-      <h1>Study Session</h1>
-      <p className="muted">Queue, timer, quick flip, and ratings.</p>
-      <div className="card" style={{ padding: 16 }}>
-        <div className="row" style={{ justifyContent: "space-between", width: "100%" }}>
-          <div className="row">
-            <label className="muted">Deck:</label>
-            <select className="card" style={{ padding: 8 }} value={deckId} onChange={(e) => setDeckId((e.target as HTMLSelectElement).value)}>
-              {decks.map((d) => (
-                <option key={d.id} value={d.id}>{d.title}</option>
-              ))}
-            </select>
-          </div>
-          <div className="row">
-            <span className="muted">Time</span>
-            <span>{timeLabel}</span>
-            {!running ? (
-              <button className="btn primary" onClick={startFiveMinutes} disabled={!deckId}>Start 5 min</button>
-            ) : (
-              <button className="btn" onClick={stopTimer}>Pause</button>
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="row" style={{ gap: 16 }}>
-        <div className="card" style={{ padding: 16, flex: 1 }}>
-          <h3>Front</h3>
-          <p>{current ? current.front : "No card"}</p>
-          <div className="spacer" />
-          <button className="btn" onClick={() => setRevealed((v) => !v)} disabled={!current}>{revealed ? "Hide" : "Reveal"}</button>
-        </div>
-        <div className="card" style={{ padding: 16, flex: 1 }}>
-          <h3>Back</h3>
-          <p className="muted">{revealed && current ? current.back : "Answer is hidden until reveal."}</p>
-          <div className="row" style={{ justifyContent: "flex-end", gap: 8 }}>
-            <button className="btn" onClick={() => rate("again")} disabled={!current}>Again</button>
-            <button className="btn" onClick={() => rate("hard")} disabled={!current}>Hard</button>
-            <button className="btn" onClick={() => rate("good")} disabled={!current}>Good</button>
-            <button className="btn primary" onClick={() => rate("easy")} disabled={!current}>Easy</button>
+    <MinimalFrame ctaHref="/progress" ctaLabel="Progress">
+      <section className="stack">
+        <h2>Study Session</h2>
+        <p className="muted">Queue, timer, quick flip, and ratings.</p>
+        <div className="card" style={{ padding: 16 }}>
+          <div className="row" style={{ justifyContent: "space-between", width: "100%" }}>
+            <div className="row">
+              <label className="muted">Deck:</label>
+              <select className="card" style={{ padding: 8 }} value={deckId} onChange={(e) => setDeckId((e.target as HTMLSelectElement).value)}>
+                {decks.map((d) => (
+                  <option key={d.id} value={d.id}>{d.title}</option>
+                ))}
+              </select>
+            </div>
+            <div className="row">
+              <span className="muted">Time</span>
+              <span>{timeLabel}</span>
+              {!running ? (
+                <button className="btn primary" onClick={startFiveMinutes} disabled={!deckId}>Start 5 min</button>
+              ) : (
+                <button className="btn" onClick={stopTimer}>Pause</button>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+        <div className="row" style={{ gap: 16 }}>
+          <div className="card" style={{ padding: 16, flex: 1 }}>
+            <h3>Front</h3>
+            <p>{current ? current.front : "No card"}</p>
+            <div className="spacer" />
+            <button className="btn" onClick={() => setRevealed((v) => !v)} disabled={!current}>{revealed ? "Hide" : "Reveal"}</button>
+          </div>
+          <div className="card" style={{ padding: 16, flex: 1 }}>
+            <h3>Back</h3>
+            <p className="muted">{revealed && current ? current.back : "Answer is hidden until reveal."}</p>
+            <div className="row" style={{ justifyContent: "flex-end", gap: 8 }}>
+              <button className="btn" onClick={() => rate("again")} disabled={!current}>Again</button>
+              <button className="btn" onClick={() => rate("hard")} disabled={!current}>Hard</button>
+              <button className="btn" onClick={() => rate("good")} disabled={!current}>Good</button>
+              <button className="btn primary" onClick={() => rate("easy")} disabled={!current}>Easy</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </MinimalFrame>
   );
 }

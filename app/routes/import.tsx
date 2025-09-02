@@ -2,6 +2,7 @@ import type { Route } from "./+types/import";
 import { useState } from "react";
 import { addCards, createDeck } from "../lib/db";
 import type { Difficulty } from "../types";
+import MinimalFrame from "../components/MinimalFrame";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -56,56 +57,58 @@ export default function ImportRoute() {
   }
 
   return (
-    <section className="stack">
-      <h1>Import & AI Card Generation</h1>
-      <p className="muted">Upload PDF, paste a URL, or paste text.</p>
-      <div className="card" style={{ padding: 16, marginBottom: 12 }}>
-        <div className="row" style={{ gap: 12 }}>
-          <label className="muted">Deck title:</label>
-          <input className="card" value={title} onChange={(e) => setTitle((e.target as HTMLInputElement).value)} style={{ padding: 8, minWidth: 220 }} />
-          {busy && <span className="muted">Generating…</span>}
-          {msg && <span>{msg}</span>}
-        </div>
-      </div>
-      <div className="grid cols-3">
-        <div className="card" style={{ padding: 16 }}>
-          <h3>Paste URL</h3>
-          <input
-            className="card"
-            style={{ width: "100%,", padding: 10 }}
-            placeholder="https://example.com/article"
-            value={url}
-            onChange={(e) => setUrl((e.target as HTMLInputElement).value)}
-          />
-          <div className="spacer" />
-          <button className="btn primary" onClick={handleUrl} disabled={busy || !url}>
-            Fetch & Generate
-          </button>
-        </div>
-        <div className="card" style={{ padding: 16 }}>
-          <h3>Paste Text</h3>
-          <textarea
-            className="card"
-            style={{ width: "100%", height: 140, padding: 10 }}
-            placeholder="Paste notes or text here"
-            value={text}
-            onChange={(e) => setText((e.target as HTMLTextAreaElement).value)}
-          />
-          <div className="row" style={{ justifyContent: "space-between" }}>
-            <button className="btn" onClick={() => setText("")}>Clear</button>
-            <button className="btn primary" onClick={handleText} disabled={busy || text.trim().length < 40}>
-              Generate Cards
-            </button>
+    <MinimalFrame ctaHref="/decks" ctaLabel="Decks">
+      <section className="stack">
+        <h2>Import & AI Card Generation</h2>
+        <p className="muted">Upload PDF, paste a URL, or paste text.</p>
+        <div className="card" style={{ padding: 16, marginBottom: 12 }}>
+          <div className="row" style={{ gap: 12 }}>
+            <label className="muted">Deck title:</label>
+            <input className="card" value={title} onChange={(e) => setTitle((e.target as HTMLInputElement).value)} style={{ padding: 8, minWidth: 220 }} />
+            {busy && <span className="muted">Generating…</span>}
+            {msg && <span>{msg}</span>}
           </div>
         </div>
-        <div className="card" style={{ padding: 16 }}>
-          <h3>Upload PDF</h3>
-          <input type="file" accept="application/pdf" disabled />
-          <p className="muted" style={{ fontSize: 12, marginTop: 8 }}>PDF OCR coming soon.</p>
-          <div className="spacer" />
-          <button className="btn" disabled>Extract & Generate</button>
+        <div className="grid cols-3">
+          <div className="card" style={{ padding: 16 }}>
+            <h3>Paste URL</h3>
+            <input
+              className="card"
+              style={{ width: "100%", padding: 10 }}
+              placeholder="https://example.com/article"
+              value={url}
+              onChange={(e) => setUrl((e.target as HTMLInputElement).value)}
+            />
+            <div className="spacer" />
+            <button className="btn primary" onClick={handleUrl} disabled={busy || !url}>
+              Fetch & Generate
+            </button>
+          </div>
+          <div className="card" style={{ padding: 16 }}>
+            <h3>Paste Text</h3>
+            <textarea
+              className="card"
+              style={{ width: "100%", height: 140, padding: 10 }}
+              placeholder="Paste notes or text here"
+              value={text}
+              onChange={(e) => setText((e.target as HTMLTextAreaElement).value)}
+            />
+            <div className="row" style={{ justifyContent: "space-between" }}>
+              <button className="btn" onClick={() => setText("")}>Clear</button>
+              <button className="btn primary" onClick={handleText} disabled={busy || text.trim().length < 40}>
+                Generate Cards
+              </button>
+            </div>
+          </div>
+          <div className="card" style={{ padding: 16 }}>
+            <h3>Upload PDF</h3>
+            <input type="file" accept="application/pdf" disabled />
+            <p className="muted" style={{ fontSize: 12, marginTop: 8 }}>PDF OCR coming soon.</p>
+            <div className="spacer" />
+            <button className="btn" disabled>Extract & Generate</button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </MinimalFrame>
   );
 }

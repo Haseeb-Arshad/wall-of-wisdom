@@ -1,5 +1,6 @@
 import type { Route } from "./+types/wall";
 import { StickyWall } from "../components/StickyWall";
+import MinimalFrame from "../components/MinimalFrame";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,10 +11,12 @@ export function meta({}: Route.MetaArgs) {
 
 export default function WallRoute() {
   return (
-    <section className="stack">
-      <h1>Sticky Wall</h1>
-      <p className="muted">Physics-based sticky notes with drag and toss.</p>
-      <StickyWall />
-    </section>
+    <MinimalFrame ctaHref="/study" ctaLabel="Study">
+      <section className="stack">
+        <h2>Sticky Wall</h2>
+        <p className="muted">Physics-based sticky notes with drag and toss.</p>
+        <StickyWall />
+      </section>
+    </MinimalFrame>
   );
 }

@@ -1,6 +1,7 @@
 import type { Route } from "./+types/progress";
 import { useEffect, useState } from "react";
 import { getDB } from "../lib/db";
+import MinimalFrame from "../components/MinimalFrame";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -48,22 +49,24 @@ export default function ProgressRoute() {
   }, []);
 
   return (
-    <section className="stack">
-      <h1>Progress</h1>
-      <div className="grid cols-3">
-        <div className="card" style={{ padding: 16 }}>
-          <h3>Last Session Length</h3>
-          <p className="muted">{sessionMinutes} min</p>
+    <MinimalFrame ctaHref="/study" ctaLabel="Study">
+      <section className="stack">
+        <h2>Progress</h2>
+        <div className="grid cols-3">
+          <div className="card" style={{ padding: 16 }}>
+            <h3>Last Session Length</h3>
+            <p className="muted">{sessionMinutes} min</p>
+          </div>
+          <div className="card" style={{ padding: 16 }}>
+            <h3>Cards / Day</h3>
+            <p className="muted">{cardsPerDay}</p>
+          </div>
+          <div className="card" style={{ padding: 16 }}>
+            <h3>Recall Score</h3>
+            <p className="muted">{recall}%</p>
+          </div>
         </div>
-        <div className="card" style={{ padding: 16 }}>
-          <h3>Cards / Day</h3>
-          <p className="muted">{cardsPerDay}</p>
-        </div>
-        <div className="card" style={{ padding: 16 }}>
-          <h3>Recall Score</h3>
-          <p className="muted">{recall}%</p>
-        </div>
-      </div>
-    </section>
+      </section>
+    </MinimalFrame>
   );
 }
