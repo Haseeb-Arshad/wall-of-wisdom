@@ -47,6 +47,9 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body, p, a, li, input, button, textarea { color: #2B2D42; }
+a { text-decoration: none; color: inherit; }
+h1, h2, h3 { color: #2B2D42; }
 
 /* App shell */
 .ww-container {
@@ -221,6 +224,7 @@ h3 { font-size: 18px; }
   min-height: calc(100dvh - 32px);
   display: grid;
   grid-template-columns: 64px 1fr;
+  animation: ww-surface-in 300ms ease;
 }
 .ws-rail {
   border-right: 1px solid #efefef;
@@ -248,3 +252,13 @@ h3 { font-size: 18px; }
 .ws-canvas { border: 1px solid #f0f0f0; border-radius: 16px; min-height: 60vh; background: #fff; }
 
 .icon { width: 18px; height: 18px; display: inline-block; color: currentColor; }
+
+/* Micro-animations */
+@keyframes ww-surface-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.hover-lift { transition: transform 160ms ease, box-shadow 160ms ease; }
+.hover-lift:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ws-surface { animation: none; }
+  .hover-lift, .pill, .rail-btn { transition: none; }
+}

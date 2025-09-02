@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import Workspace from "../components/Workspace";
+import MinimalFrame from "../components/MinimalFrame";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -9,5 +9,16 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <Workspace />;
+  return (
+    <MinimalFrame ctaHref="/import" ctaLabel="Import">
+      <section className="stack">
+        <h2>Welcome</h2>
+        <p className="muted">Start by importing a document or open the wall.</p>
+        <div className="row">
+          <a className="btn primary" href="/import">Import</a>
+          <a className="btn" href="/wall">Open Wall</a>
+        </div>
+      </section>
+    </MinimalFrame>
+  );
 }
