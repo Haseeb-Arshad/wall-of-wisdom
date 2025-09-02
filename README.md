@@ -1,6 +1,41 @@
-# Welcome to React Router!
+# WisdomWall — Sticky-wall flashcards with AI + SRS
 
-A modern, production-ready template for building full-stack React applications using React Router.
+This app implements an MVP of a sticky-note study wall with physics, AI-powered card generation, and an SM-2 study player.
+
+Highlights
+
+- Sticky-wall UI with inertia, tilt, and stacking
+- Import URL/text → OpenAI generates 5–10 flashcards
+- Study session player with Again/Hard/Good/Easy and SM-2 scheduling
+- Local-first via IndexedDB; PWA for offline sessions
+- Optional Supabase auth (email/password + Google)
+
+Quick Start
+
+```bash
+npm install
+npm run dev
+```
+
+Environment
+
+Copy `.env.example` to `.env` and set `OPENAI_API_KEY` to enable AI generation. Supabase is optional:
+
+```
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4o-mini
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+```
+
+Primary Screens
+
+- Home: onboarding CTA to Import/Wall
+- Wall: physics-based sticky notes
+- Import: URL/Text → AI JSON → deck + cards in IndexedDB
+- Study: 5-minute player, reveal + ratings, SM-2 scheduling
+- Progress: simple analytics (session length, cards/day, recall%)
+- Auth: Supabase stubs; Privacy page explains storage
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
 
@@ -80,7 +115,7 @@ Make sure to deploy the output of `npm run build`
 
 ## Styling
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+Custom CSS lives in `app/styles/custom.css` and is imported in `app/root.tsx`, following a Next-style CSS import pattern. Tailwind remains installed but is not required for core UI.
 
 ---
 
