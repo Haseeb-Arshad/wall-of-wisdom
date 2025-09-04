@@ -25,6 +25,7 @@ export default function StudyRoute() {
   const [running, setRunning] = useState(false);
   const timerRef = useRef<number | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
+  
 
   useEffect(() => {
     listDecks().then((ds) => {
@@ -94,6 +95,8 @@ export default function StudyRoute() {
     const ss = String(s % 60).padStart(2, "0");
     return `${m}:${ss}`;
   }, [timer]);
+
+  
 
   return (
     <MinimalFrame ctaHref="/progress" ctaLabel="Progress">

@@ -3,7 +3,7 @@ export function Welcome() {
     <main>
       <section className="stack" style={{ alignItems: "flex-start" }}>
         <h1>Welcome to WisdomWall</h1>
-        <p className="muted">Import a doc → auto-generate cards → run a 5-minute session.</p>
+        <p className="muted">Import a doc + auto-generate cards + run a 5-minute session.</p>
         <div className="row">
           <a className="btn primary" href="/import">Import a Document</a>
           <a className="btn" href="/wall">Open Sticky Wall</a>
@@ -27,3 +27,4 @@ export function Welcome() {
     </main>
   );
 }
+

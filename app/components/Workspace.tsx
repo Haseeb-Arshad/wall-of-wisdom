@@ -83,7 +83,6 @@ export default function Workspace() {
           <button className="rail-btn" title="Hide"><IconEyeOff /></button>
           <button className="rail-btn" title="Trash"><IconTrash /></button>
           <div className="rail-spacer" />
-          <div style={{ opacity: 0.5 }}>🐱</div>
         </aside>
         <section className="ws-main">
           <div className="ws-topbar">

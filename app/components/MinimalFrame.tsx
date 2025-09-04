@@ -42,7 +42,6 @@ export default function MinimalFrame({ left, ctaHref, ctaLabel = "New", searchPl
           <Link className="rail-btn" to="/study" title="Study"><IconEye /></Link>
           <Link className="rail-btn" to="/progress" title="Progress"><IconEyeOff /></Link>
           <div className="rail-spacer" />
-          <div style={{ opacity: 0.5 }}>🐱</div>
         </aside>
         <section className="ws-main">
           <div className="ws-topbar">

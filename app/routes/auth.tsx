@@ -24,7 +24,7 @@ export default function AuthRoute() {
   return (
     <div className="auth-wrap">
       <div className="auth-box">
-        <div className="auth-title">enter notédex</div>
+        <div className="auth-title">enter notAcdex</div>
 
         <button className="auth-pill" onClick={() => oauth("google")}>
           <span className="icon">
@@ -49,7 +49,7 @@ export default function AuthRoute() {
         </button>
 
         <button className="auth-pill dark" onClick={() => oauth("twitter")}>
-          <span className="icon">✕</span>
+          <span className="icon">�o</span>
           The Everything App
         </button>
 

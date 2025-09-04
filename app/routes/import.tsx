@@ -17,6 +17,7 @@ export default function ImportRoute() {
   const [title, setTitle] = useState("Imported Deck");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  
 
   async function callGenerate(payload: FormData) {
     setBusy(true);
@@ -55,6 +56,8 @@ export default function ImportRoute() {
     f.set("title", title || "Imported Deck");
     await callGenerate(f);
   }
+
+  
 
   return (
     <MinimalFrame ctaHref="/decks" ctaLabel="Decks">
