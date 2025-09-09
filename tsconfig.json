@@ -1,9 +1,15 @@
 {
   "include": [
-    "**/*",
+    "app/**/*",
     "**/.server/**/*",
     "**/.client/**/*",
-    ".react-router/types/**/*"
+    ".react-router/types/**/*",
+    "vite.config.ts",
+    "react-router.config.ts"
+  ],
+  "exclude": [
+    "backend/**",
+    "node_modules/**"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],

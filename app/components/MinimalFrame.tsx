@@ -1,4 +1,4 @@
-import { IconEye, IconEyeOff, IconFile, IconGear, IconGraph, IconPlus, IconSpark } from "./Workspace";
+import { IconPlus, IconSpark } from "./Workspace";
 import { Link } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { searchAll, type SearchHit } from "../lib/search";
@@ -9,9 +9,10 @@ type Props = PropsWithChildren<{
   ctaHref?: string;
   ctaLabel?: string;
   searchPlaceholder?: string;
+  onSearchSelect?: (hit: SearchHit) => void;
 }>;
 
-export default function MinimalFrame({ left, ctaHref, ctaLabel = "New", searchPlaceholder = "search your knowledge space", children }: Props) {
+export default function MinimalFrame({ left, ctaHref, ctaLabel = "New", searchPlaceholder = "Search your knowledge", onSearchSelect, children }: Props) {
   const [q, setQ] = useState("");
   const [results, setResults] = useState<SearchHit[]>([]);
   const [open, setOpen] = useState(false);
@@ -32,37 +33,66 @@ export default function MinimalFrame({ left, ctaHref, ctaLabel = "New", searchPl
     return () => document.removeEventListener("click", onDoc);
   }, []);
   return (
-    <div className="ws-wrap">
-      <div className="ws-surface">
-        <aside className="ws-rail">
-          <Link className="rail-btn" to="/" title="Home"><IconFile /></Link>
-          <Link className="rail-btn" to="/wall" title="Wall"><IconGraph /></Link>
-          <Link className="rail-btn" to="/import" title="Import"><IconSpark /></Link>
-          <Link className="rail-btn" to="/decks" title="Decks"><IconFile /></Link>
-          <Link className="rail-btn" to="/study" title="Study"><IconEye /></Link>
-          <Link className="rail-btn" to="/progress" title="Progress"><IconEyeOff /></Link>
-          <div className="rail-spacer" />
-        </aside>
-        <section className="ws-main">
-          <div className="ws-topbar">
-            <div className="ws-left">
-              <span className="pill"><IconFile /> files view</span>
-              <span className="pill" title="actions"><IconSpark /></span>
+    <div>
+      <header className="ww-header">
+        <div className="ww-container ww-nav" ref={boxRef}>
+          <div className="ww-brand">
+            <span style={{ width: 8, height: 8, borderRadius: 999, background: "var(--ww-cta)", display: "inline-block" }} />
+            <Link to="/" style={{ textDecoration: "none" }}>WisdomWall</Link>
+          </div>
+          <nav className="ww-nav-links" aria-label="Primary">
+            <a className="ww-link" href="/#review">Review</a>
+            <a className="ww-link" href="/#wall">Wall</a>
+            <a className="ww-link" href="/#decks">Decks</a>
+            <a className="ww-link" href="/#import">Import</a>
+            <a className="ww-link" href="/#progress">Progress</a>
+          </nav>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, position: "relative" }}>
+            <div className="pill-input">
+              <IconSpark />
+              <input
+                placeholder={searchPlaceholder}
+                value={q}
+                onChange={(e) => { setQ((e.target as HTMLInputElement).value); setOpen(true); }}
+                onFocus={() => setOpen(true)}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") { setOpen(false); return; }
+                  if (e.key === "Enter") {
+                    const top = results[0];
+                    if (top) {
+                      if (onSearchSelect) {
+                        onSearchSelect(top);
+                        setOpen(false);
+                        setQ("");
+                      }
+                    }
+                  }
+                }}
+              />
             </div>
-            <div style={{ display: "flex", justifyContent: "center", position: "relative" }} ref={boxRef}>
-              <div className="pill-input">
-                <IconSpark />
-                <input
-                  placeholder={searchPlaceholder}
-                  value={q}
-                  onChange={(e) => { setQ((e.target as HTMLInputElement).value); setOpen(true); }}
-                  onFocus={() => setOpen(true)}
-                />
-                <span className="hint">type to focus</span>
-              </div>
-              {open && results.length > 0 && (
-                <div className="search-results">
-                  {results.map((r) => (
+            {ctaHref && (
+              <Link className="pill pill-accent" to={ctaHref}><IconPlus /> {ctaLabel}</Link>
+            )}
+            {open && results.length > 0 && (
+              <div className="search-results">
+                {results.map((r) => (
+                  onSearchSelect ? (
+                    <button
+                      key={(r.type === "deck" ? `d-${r.id}` : `c-${r.id}`)}
+                      className="search-result"
+                      onClick={() => { onSearchSelect(r); setOpen(false); setQ(""); }}
+                    >
+                      {r.type === "deck" ? (
+                        <>
+                          <strong>Deck</strong> {(r as any).title}
+                        </>
+                      ) : (
+                        <>
+                          <strong>Card</strong> {(r as any).front}
+                        </>
+                      )}
+                    </button>
+                  ) : (
                     r.type === "deck" ? (
                       <Link key={`d-${r.id}`} to={`/study?deck=${r.id}`} onClick={() => setOpen(false)}>
                         <strong>Deck</strong> {r.title}
@@ -72,30 +102,15 @@ export default function MinimalFrame({ left, ctaHref, ctaLabel = "New", searchPl
                         <strong>Card</strong> {r.front}
                       </Link>
                     )
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="ws-right">
-              {ctaHref && (
-                <Link className="pill pill-accent" to={ctaHref}><IconPlus /> {ctaLabel}</Link>
-              )}
-            </div>
+                  )
+                ))}
+              </div>
+            )}
           </div>
-          <div className="ws-body">
-            <div className="ws-lpane">
-              {left ?? (
-                <div className="note-card">
-                  <h4>Untitled Note</h4>
-                  <p>No content</p>
-                </div>
-              )}
-            </div>
-            <div className="ws-canvas">
-              <div style={{ padding: 16 }}>{children}</div>
-            </div>
-          </div>
-        </section>
+        </div>
+      </header>
+      <div className="ww-container" style={{ paddingTop: 18, paddingBottom: 28 }}>
+        {children}
       </div>
     </div>
   );
